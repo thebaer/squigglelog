@@ -57,15 +57,6 @@ func main() {
 	outFilePtr := flag.String("o", defaultOutFile, "Squigglelog template file (defined name).")
 	flag.Parse()
 
-	c := configuration()
-	if c = nil {
-		c := configure()
-	}
-
-	if c != nil {
-		templateFilePtr = c.TemplateFile
-	}
-	
 	entryFiles := getEntries()
 	entries := make([]Entry, len(*entryFiles))
 	i := 0
