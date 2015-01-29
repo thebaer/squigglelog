@@ -54,7 +54,7 @@ func main() {
 
 	// Get any arguments
 	templateFilePtr := flag.String("t", defaultTemplateFile, "Squigglelog template file (defined name).")
-	outFilePtr := flag.String("o", defaultOutFile, "Squigglelog template file (defined name).")
+	outFilePtr := flag.String("o", defaultOutFile, "Squigglelog output file name.")
 	flag.Parse()
 
 	entryFiles := getEntries()
