@@ -13,10 +13,11 @@ import (
 	"encoding/json"
 )
 
+var outputPath string = os.Getenv("HOME") + "/public_html/"
 const entriesPath = "./entries/"
 const templatesPath = "./templates/"
-const outputPath = "./html/"
 const defaultTemplateFile = "log"
+const defaultOutFile = "~log"
 
 type Entry struct {
 	Date string
@@ -48,11 +49,12 @@ func loadEntry(rawDate string) (*Entry, error) {
 
 func main() {
 	fmt.Println()
-	fmt.Println("    ~log generator v1.0")
+	fmt.Println("    ~log generator v1.1")
 	fmt.Println()
 
 	// Get any arguments
-	templateFilePtr := flag.String("template", defaultTemplateFile, "Tildelog template file (defined name).")
+	templateFilePtr := flag.String("t", defaultTemplateFile, "Squigglelog template file (defined name).")
+	outFilePtr := flag.String("o", defaultOutFile, "Squigglelog template file (defined name).")
 	flag.Parse()
 
 	c := configuration()
@@ -80,9 +82,9 @@ func main() {
 	
 	fmt.Printf("Using template %s...\n", *templateFilePtr)
 
-	generateLog(entries, *templateFilePtr)
+	generateLog(entries, *templateFilePtr, *outFilePtr)
 
-	fmt.Printf("Finished! Saved to %slog.html\n", outputPath)
+	fmt.Printf("Finished! Saved to %s%s.html\n", outputPath, *outFilePtr)
 }
 
 type Config struct {
@@ -122,8 +124,8 @@ func getEntries() *[]string {
 	return &fileList
 }
 
-func generateLog(entries []Entry, templateFile string) {
-	file, err := os.Create(outputPath + "log.html")
+func generateLog(entries []Entry, templateFile string, outFile string) {
+	file, err := os.Create(outputPath + outFile + ".html")
 	if err != nil {
 		panic(err)
 	}
